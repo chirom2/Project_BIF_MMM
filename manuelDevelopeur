@@ -1,0 +1,14 @@
+indexation-hashMap
+entrée: un fichier fasta représentant une partie du génome d'un individu
+sortie: une table contenant les reads du génome
+
+indexation-SA
+entrée: un fichier fasta représentant une partie du génome d'un individu
+sortie: un tableau des suffixes contenant les reads du génome
+
+seed
+entrée: prends un read
+		la taille k du mot utilisé comme graine
+		le nombre d de substitutions dans un alignement
+		
+sortie: 
