@@ -40,19 +40,24 @@ def SA(s):##SA whith LCP LINEAR
 
 		
 
-#Find all the kmer in a string
-#return list of kmer
-def find_kmers(s, kmer_size):
-	kmers = "" 
+#Return the list of all the kmer present in the genome
+#return list of position
+def find_kmers(s, sa,kmer_size):
+	
+	kmersPresent = []#list of kmer present in the genome 
+	kmer=""
 	for i in range(0, len(s)-kmer_size+1):
-		kmers += s[i:i+kmer_size]
-	return kmers
+		kmer += s[i:i+kmer_size]
+		pos = GET_I(kmer, s, sa)
+		if(pos != -1):
+			kmersPresent.append( pos )		
+		kmer=""
+	return kmersPresent
       
-#Param list of Kmer      
-#Print kmer
-def printKmer(kmer):
-	for i in range(0, len(kmer)):
-		print kmer[i]
+#Param list of pos      
+def printKmer(kmerl):
+	for i in range(0, len(kmerl)):
+		print kmerl[i]
 
 #param size of kmer
 #Return the list of the present kmer in s
@@ -85,20 +90,40 @@ def GET_I (q,s,sa):
 	size_q= len(q)
 	while( (fin-deb) > 0):
 		i = (deb+fin)/2
-		occ = sa[i:i+size_q]
+		occ = s[sa[i]:sa[i]+size_q]
 		if(q == occ):
 			return sa[i]
 		elif(occ>q):
 			fin=i-1
 		else:
-			de=i+1
+			deb=i+1
 	return -1
+	
+#return the position of a query if it exists else return -1	
+def GET_ALL (q,s,sa):
+	deb = 0
+	fin = len(s)
+	size_q= len(q)
+	while( (fin-deb) > 0):
+		i = (deb+fin)/2
+		occ = s[sa[i]:sa[i]+size_q]
 		
+		if(q == occ):
+			return sa[i]
+		elif(occ>q):
+			fin=i-1
+		else:
+			deb=i+1
+	return -1
 	
 #Print the suffixe array of the sequence s
 def printSA(sa, s):
 	for i in range (0, len(sa)):
 		print(sa[i], s[sa[i]:])
 	
-
+def SAmethod(s,ksize):
+	sa = getSA(s)
+	print("Sa termine")
+	pos = find_kmers(s,sa,ksize)
+	printKmer(pos)	
 

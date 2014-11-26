@@ -16,12 +16,8 @@ def Index():
 		s = s.replace("\n",'$')#change the last chararcter in $		
 	if(typeIndex == "SA"):
 		print("Indexation par la methode du SA")		
-		#klist = suffixearray.find_kmers(s, 15)
-		#suffixearray.printKmer(klist)
-		#sa = suffixearray.getSA(klist)		
-		#print(klist)
-		#lk = suffixearray.listOfposition(s,25)
-		print(lk)
+		klist = suffixearray.SAmethod(s, 25)
+		
 	elif(typeIndex == "HT"):
 		print("Indexation par table de hash")
 		k=25
