@@ -2,58 +2,10 @@
 #SA
 
 import tools_MMM
+import alignement
 
-def INV(s,sa):
-	n = len(s)
-	inv = [0 for i in range(n)]
-	for i in  range(n):
-		inv[sa[i]]=i
-	return inv
 
-def LCP_linear(s,sa,inv):
-	lg=0
-	n = len(s)
-	depth =0
-	lcp= [0 for i in range(n)]
-	for k in range(0,n):
-		s1 = k		
-		s2 = sa[inv[k]-1]
-		l = LCP_from_depth(s,depth, s1, s2)
-		depth = max(l-1,0)
-		lcp[inv[k]] = l
-	return lcp	
-		
-		
-def LCP_from_depth(s,depth,pos_s1,pos_s2):
-	res = depth
-	while (s[pos_s1 + res] == s[pos_s2 + res]):
-		res+=1
-	return res	
-
-def SA(s):##SA whith LCP LINEAR	
-	toolsMMM=tools_MMM
-	sa=toolsMMM.simple_kark_sort(s) 
-	inv=INV(s,sa)
-	LCP_linear(s,sa,inv)
 ###########################################################################
-
-
-		
-
-#Return the list of all the kmer present in the genome
-#return list of position
-def find_kmers(s, sa,kmer_size):
-	
-	kmersPresent = []#list of kmer present in the genome 
-	kmer=""
-	for i in range(0, len(s)-kmer_size+1):
-		kmer += s[i:i+kmer_size]
-		pos = GET_I(kmer, s, sa)
-		if(pos != -1):
-			kmersPresent.append( pos )		
-		kmer=""
-	return kmersPresent
-      
 #Param list of pos      
 def printKmer(kmerl):
 	for i in range(0, len(kmerl)):
@@ -72,7 +24,7 @@ def listOfposition(s,k):
 	kk = kmer[0:25]
 	#print(kk)
 	#for i in range(0, len(kmer)):
-	pos = GET_I(kk,s,sa)
+	pos = GET_ALLpos(kk,s,sa)
 	if(pos != -1):
 		lk = lk.append(pos)
 	return lk
@@ -91,7 +43,7 @@ def GET_I (q,s,sa):
 	while( (fin-deb) > 0):
 		i = (deb+fin)/2
 		occ = s[sa[i]:sa[i]+size_q]
-		if(q == occ):
+		if(q == occ):#We found an occur // we need continue to search around this occur
 			return sa[i]
 		elif(occ>q):
 			fin=i-1
@@ -116,14 +68,92 @@ def GET_ALL (q,s,sa):
 			deb=i+1
 	return -1
 	
+def GET_ALLpos(q,s,sa):
+	deb = 0
+	fin = len(s)
+	size_q= len(q)
+	size_s= len(s)
+	size_sa= len(sa)#CHeck that!!!
+	pos = []
+	while( (fin-deb) > 0):
+		i = (deb+fin)/2
+		occ = s[sa[i]:sa[i]+size_q]
+		#print(occ)	
+		if(q == occ):
+			pos.append(sa[i])
+			endUp = i+1
+			endDown = i-1		
+			if(endUp < size_sa):#Look Up
+				occUp = s[sa[endUp]:sa[endUp]+size_q]
+				while(q == occUp and endUp<size_sa):
+					pos.append(sa[endUp])
+					endUp = endUp+1
+					occUp = s[sa[endUp]:sa[endUp]+size_q]
+			if(endDown > 0):#Look Down
+				occDown = s[sa[endDown]:sa[endDown]+size_q]			
+				while(q == occDown and endDown>0):
+					pos.append(sa[endDown])
+					endDown = endDown-1
+					occDown = s[sa[endDown]:sa[endDown]+size_q]
+				endUp = 0
+				endDown = 0
+				occDown = ""
+				occUp = ""					
+			if(occ>q):
+				fin=i-1
+			else:
+				deb=i+1					
+		elif(occ>q):
+			fin=i-1
+		else:
+			deb=i+1
+				
+	return pos	
+	
+def printPos(pos):
+	for i in range (0, len(pos)):
+		print("i",pos[i])	
+	
+#Return the list of all the kmer present in the genome
+#return list of position
+def find_kmers(s, sa,kmer_size):	
+	kmersPresent = []#list of kmer present in the genome 
+	kmer=""
+	for i in range(0, len(s)-kmer_size):
+		kmer = s[i:i+kmer_size]
+		pos = GET_ALLpos(kmer,s,sa)#pos = all occurences of kmer in s
+		if(len(pos)==1):#TODO append = extend 
+			kmersPresent.append(pos)
+		else:			
+			kmersPresent.extend(pos)		
+	return kmersPresent
+
+
+
 #Print the suffixe array of the sequence s
 def printSA(sa, s):
 	for i in range (0, len(sa)):
 		print(sa[i], s[sa[i]:])
 	
-def SAmethod(s,ksize):
-	sa = getSA(s)
-	print("Sa termine")
-	pos = find_kmers(s,sa,ksize)
-	printKmer(pos)	
+def SAmethod(s, read, sizeK, dmax):
+	align = alignement
+	sa = getSA(s)		
+	align.alignement(read, dmax, sizeK,s, sa)
+
+
+file_name = "test1/reference2.fasta"
+#raw_input("Saisir le nom du ficher a indexer\n")
+file_s = open(file_name, 'r')
+s = file_s.readline()	
+while(s[0]=='>'):
+	s = file_s.readline()
+	s = s.replace("\n",'$')#change the last chararcter in $	
+tools = tools_MMM
+kmer = "TCTGATGTAATGCGGTTTCCCTTGAAGGATAGGCATAATTTGATTGATCACTTCACTGCGATCTAGCTATGTTTAGAGTAATAGTTTCCAACCCACTGAG"
+sa =  getSA(s)
+pos = GET_ALLpos(kmer, s, sa)
+print(pos)
+
+
+
 
