@@ -18,7 +18,7 @@ def alignement(read, dmax, sizeK,s, sa):
 	i=0
 	kRead = read[0:sizeK]#the sizeK first char ex:acgtgtttcca
 	pos = suffixeArray.GET_ALLpos(kRead,s,sa)
-	#print(pos)
+	print(pos)
 	#suffixeArray.printPos(pos)
 	size = ((len(read))-1)
 	while (i <= len(pos)-1):
@@ -39,7 +39,7 @@ def alignement(read, dmax, sizeK,s, sa):
 			j+=1
 			x+=1
 		i+=1
-		
-	print(sRead)
-	print(sMatch)
-	print(sGen)	
+		print(sRead)
+		print(sMatch)
+		print(sGen)	
+	

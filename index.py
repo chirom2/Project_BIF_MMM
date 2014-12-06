@@ -37,6 +37,7 @@ def all_reads(f,s):
 		if not lines:
 			break			
 		if(lines[0] == '>'):
+			print(lines)
 			lines = f.readline()
 			lines = lines.replace("\n",'$')#lines = reads
 			suffixearray.SAmethod(s,lines, 20,5)
@@ -54,7 +55,3 @@ hashTable = hashtab
 tools=tools_MMM
 align = alignement
 Index()
-
-#for i in xrange(len(s)):
-#		print i," ",sa[i]," ",LCP[i]," ",s[sa[i]:]," ",inv[i]
-
