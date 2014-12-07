@@ -7,10 +7,12 @@ def chain_index(s,k,m):
 	tools = tools_MMM
 	T=[]
 	kmer=[]
+	Ksize=k
+	st=""
 	for i in range(0,m-1):
 		T[i]=T.append(None)		#Init of an empty Table
 	for i in range(0,(len(s)-k)):
-		st = s[i:i+k]
+		st = s[i:(i+Ksize)]
 		pos=i
 		kmer=[i,st]
 		adr = tools.basicHash(kmer[1],m)
