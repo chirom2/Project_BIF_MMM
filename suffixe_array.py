@@ -58,21 +58,11 @@ def GET_ALLpos(q,s,sa):
 				
 	return pos	
 	
-def printPos(pos):
-	for i in range (0, len(pos)):
-		print("i",pos[i])	
-	
-
-
-#Print the suffixe array of the sequence s
-def printSA(sa, s):
-	for i in range (0, len(sa)):
-		print(sa[i], s[sa[i]:])
 	
 def SAmethod(s, read, sizeK, dmax):
 	align = alignement
 	sa = getSA(s)	
-	align.alignement(read, dmax, sizeK,s, sa)
+	align.alignementSA(read, dmax, sizeK,s, sa)
 
 
 

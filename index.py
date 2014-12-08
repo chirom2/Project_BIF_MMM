@@ -5,33 +5,54 @@ import tools_MMM
 from random import *
 import os
 
+suffixearray=suffixe_array
+hashTable = hashtab
+tools=tools_MMM
+align = alignement
+
+#Size of seeds
+Ksize=20
+#Numbers of Gap
+dmax=5
 
 def Index():
 	typeIndex=raw_input("entrez le choix d'indexation, SA ou HT \n")
 	file_name = "test1/reference2.fasta"
 	#raw_input("Saisir le nom du ficher a indexer\n")
+	
+	#Opening Genome's file
 	file_s = open(file_name, 'r')
 	s = file_s.readline()	
 	while(s[0]=='>'):
 		s = file_s.readline()
-		s = s.replace("\n",'$')#change the last chararcter in $		
-	if(typeIndex == "SA"):
+		s = s.replace("\n",'$')#change the last chararcter in $
+		
+	#Opening Read's file
+	file_name = "test1/reads.fasta"
+	file_r = open(file_name, 'r')
+		
+	#Indexation Sufixe Array
+	if(typeIndex == "SA" or typeIndex == "sa"):
 		print("Indexation par la methode du SA")
-		file_name = "test1/reads.fasta"
-		file_r = open(file_name, 'r')
-		all_reads(file_r, s)
+		all_reads(file_r, s, Ksize, dmax, 0, "SA")
+		
+	#Indexation Hashtab
+	elif(typeIndex == "HT" or typeIndex == "ht"):
+		print("Indexation par table de hash")
+		T=hashTable.chain_index(s,Ksize)
+		all_reads(file_r, s,Ksize, dmax, T, "HT")
 		file_r.close()
 		file_s.close()
-	elif(typeIndex == "HT"):
-		print("Indexation par table de hash")
-		k=19
-		#raw_input("taille des kmer\n")
-		n=len(s)
-		sa=hashTable.chain_index(s,k,n)
+		
+	#Wrong command
 	else:
-		print("Error: Mauvaise commande")		
+		print("Error: Mauvaise commande")
+			
+	#Close files
+	file_r.close()
+	file_s.close()	
 
-def all_reads(f,s):
+def all_reads(f, s, Ksize, dmax, T, Mode):
 	while 1:
 		lines = f.readline()
 		if not lines:
@@ -40,7 +61,11 @@ def all_reads(f,s):
 			print(lines)
 			lines = f.readline()
 			lines = lines.replace("\n",'$')#lines = reads
-			suffixearray.SAmethod(s,lines, 20,5)
+			if(Mode == "SA"):
+				suffixearray.SAmethod(s,lines, Ksize, dmax)
+			elif(Mode == "HT"):
+				align.alignementHT(lines ,dmax , Ksize, s, T)
+
 #For test: Generate a sequence of size n
 def generate_seq(n):
 	seq = ""
@@ -49,9 +74,4 @@ def generate_seq(n):
 	seq+='$'
 	return (seq)
 
-
-suffixearray=suffixe_array
-hashTable = hashtab
-tools=tools_MMM
-align = alignement
 Index()
