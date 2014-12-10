@@ -1,6 +1,8 @@
 import tools_MMM
 import alignement
+import reverse
 
+revrs = reverse
 align=alignement
 
 #Indexation in hashmap chaining
@@ -51,8 +53,7 @@ def chain_query(T,w,sSize,dmax):
 				listPos.append(T[adr][j][0])
 			elif (align.diffBetween2S(T[adr][j][1],w,dmax)):
 				listPos.append(T[adr][j][0])
-		#printPos(listPos)		
-		return listPos	
+		return listPos
 	return None			
 
 
