@@ -16,11 +16,12 @@ def alignementSA(read, dmax, sizeK,s, sa):
 	sRead = ""
 	sMatch = ""
 	sGen = ""
+	numAlign = 0
 	i=0
 	#the sizeK first char ex:acgtgtttcca
 	kRead = read[i:sizeK]
 	#list of position
-	pos = suffixeArray.GET_ALLpos(kRead,s,sa)
+	pos = suffixeArray.GET_ALLpos(kRead,s,sa,dmax)
 	size = ((len(read))-1)
 	while (i <= len(pos)-1):
 		sRead = ""
@@ -45,10 +46,16 @@ def alignementSA(read, dmax, sizeK,s, sa):
 			j+=1
 			x+=1
 		#forward in pos
+		print " alignement>>",numAlign	
+		print " #pos",pos[i]
+		print " #strand=+",-1#TODO check this parameter
+		print " #d=",d	
+		print " ",sRead
+		print " ",sMatch
+		print " ",sGen
+		print("\n") 
 		i+=1
-		print(sRead)
-		print(sMatch)
-		print(sGen)	
+		numAlign += 1
 #
 #Alignement for the hashtab
 #
@@ -63,7 +70,7 @@ def alignementHT(read, dmax, sizeK,s, T):
 	sSize=len(s)
 	pos = []
 	kRead = read[0:sizeK]#the sizeK first char ex:acgtgtttcca
-	pos = ht.chain_query(T,kRead,sSize)#return a list of list
+	pos = ht.chain_query(T,kRead,sSize,dmax)#return a list of list
 	size = ((len(read))-1)
 
 	if (pos != None and pos != []):
@@ -98,6 +105,18 @@ def alignementHT(read, dmax, sizeK,s, T):
 			print("\n") 
 			i+=1	
 			numAlign += 1
+
+#return a boolean if the difference between s1 & s2
+def diffBetween2S(s1,s2,dmax):
+	count=0
+	j=0
+	for i in range(0,len(s2)-1):
+		if(s1[i]!=s2[j]):
+			count+=1
+		j+=1
+	if(count<=dmax):
+		return True
+	return False
 		
 def printPos(listPos):
 	for i in range(0, len(listPos)):

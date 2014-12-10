@@ -40,7 +40,6 @@ def Index():
 	elif(typeIndex == "HT" or typeIndex == "ht"):
 		print("Indexation par table de hash")
 		T=hashTable.chain_index(s,Ksize)
-		print T
 		all_reads(file_r, s,Ksize, dmax, T, "HT")
 		file_r.close()
 		file_s.close()

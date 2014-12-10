@@ -4,6 +4,8 @@
 import tools_MMM
 import alignement
 
+align = alignement
+
 
 ###########################################################################
 
@@ -16,7 +18,7 @@ def getSA(s):
 	
 
 	
-def GET_ALLpos(q,s,sa):
+def GET_ALLpos(q,s,sa,dmax):
 	deb = 0
 	fin = len(s)
 	size_q= len(q)
@@ -27,7 +29,7 @@ def GET_ALLpos(q,s,sa):
 		i = (deb+fin)/2
 		occ = s[sa[i]:sa[i]+size_q]
 		#print(occ)	
-		if(q == occ):
+		if(align.diffBetween2S(q,occ,dmax)):
 			pos.append(sa[i])
 			endUp = i+1
 			endDown = i-1		
@@ -60,7 +62,6 @@ def GET_ALLpos(q,s,sa):
 	
 	
 def SAmethod(s, read, sizeK, dmax):
-	align = alignement
 	sa = getSA(s)	
 	align.alignementSA(read, dmax, sizeK,s, sa)
 
