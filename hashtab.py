@@ -24,7 +24,7 @@ def chain_index(s,k):
 		pos=[i]
 		objectkmer=[pos,st]#POS or I [ [list, of ,postion] , "kmer"] => element of the hashtable
 		adr = tools.basicHash(objectkmer[1],m)
-		if (T[adr] == None):
+		if  T[adr] == None:
 			T[adr] = [objectkmer]
 		else: #the kmer is not present
 			for j in range(0,len(T[adr])):				
@@ -47,7 +47,11 @@ def chain_query(T,w,sSize,dmax):
 	tools = tools_MMM
 	adr= tools.basicHash(w,sSize)
 	listPos = []
-	if(T[adr] != None):		
+	if  T[adr] == None:
+		x=revrs.reverseAux(w[0])
+		w=x+w[1:]
+		adr= tools.basicHash(w,sSize)
+	elif T[adr] != None:		
 		for j in range(0,len(T[adr])):
 			if(T[adr][j][1]==w):
 				listPos.append(T[adr][j][0])
