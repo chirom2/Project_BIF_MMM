@@ -1,0 +1,22 @@
+entrez le choix d'indexation, SA ou HT 
+Indexation par table de hash
+>read1: position 0
+
+>read2: position 900
+
+>read3: position 500
+
+>read4: position 500 revcomp
+
+>read5: position 500. Substitutions pos10 T-->A; pos50: C-->G; pos:80: A-->T
+
+>read6: position 500. Substitution pos0 T-->G
+
+>read7: position 500. substitutions pos19 C-->G; pos39 T-->A; pos59 G-->C; pos79 A-->C; pos99 G-->A
+
+>read8: position 500. substitutions pos20 C-->A; pos39 T-->A; pos59 G-->C; pos79 A-->C; pos99 G-->A
+
+>read9: position 500. substitutions pos19 C-->G; pos39 T-->A; pos59 G-->C; pos79 A-->C
+
+>read10: Reverse complement of read5
+

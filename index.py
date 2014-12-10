@@ -18,8 +18,6 @@ dmax=5
 def Index():
 	typeIndex=raw_input("entrez le choix d'indexation, SA ou HT \n")
 	file_name = "test1/reference2.fasta"
-	#raw_input("Saisir le nom du ficher a indexer\n")
-	
 	#Opening Genome's file
 	file_s = open(file_name, 'r')
 	s = file_s.readline()	

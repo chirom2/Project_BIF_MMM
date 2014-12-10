@@ -1,0 +1,32 @@
+Jeu de données "puceron"
+
+Vraies données :
+ - reference_puceron_2Mb.fasta : génome de référence = 1 scaffold (partie) du génome du puceron du pois (GL349629 taille=2096827 pb, soit moins de 0.5% du génome entier)
+ - reads_1K.fasta : 1000 reads (de taille 100 pb) issus du séquençage Illumina d'un autre individu puceron.
+ - reads_100K.fasta : 100000 reads (de taille 100 pb) issus du séquençage Illumina d'un autre individu puceron.
+
+
+Le premier jeu de reads (1K) servira pour effectuer les tests de sensibilité et de performances (temps) en fonction du paramètre k. Le deuxième jeu de reads (100K) servira pour évaluer uniquement les performances en temps et en mémoire du mapper MMM.
+
+
+Pour les tests de sensibilité, on calculera le temps d'exécution et le % d'alignements retrouvés (recall) pour différentes valeurs de k (à vous de choisir les valeurs intéressantes) et pour dmax=6. Ces résultats seront à présenter dans un tableau (du manuel utilisateur), du type ci-dessous, et devront vous aider à orienter l'utilisateur quant au choix des valeurs de ces paramètres.
+
+dmax = 6
+|   k    |  recall (%)  |  time (s)  |
+|------------------------------------|
+|   10   |    100.0     |    70.5    |
+|   ..   |    ...       |    ...     |
+|   ..   |    ...       |    ...     |
+|   ..   |    ...       |    ...     |
+|   100  |    2.35      |    33.1    |
+--------------------------------------
+
+Pour calculer le recall, nous vous donnons le nombre maximal d'alignements qu'on peut obtenir pour reads_1K.fasta pour dmax=6 (nb_align_bonus est le nombre total d'alignements strand=+1 et strand=-1, si on a implémenté le bonus "reverse-complement") :
+
+nb_true_align = 468
+nb_true_align_bonus = 948
+
+
+
+
+
