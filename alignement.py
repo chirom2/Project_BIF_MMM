@@ -10,13 +10,16 @@ import tools_MMM
 #
 def alignementSA(read, dmax, sizeK,s, sa):
 	suffixeArray = suffixe_array
-	kRead = ""
+	#Empty list of position
 	pos = []
+	kRead = ""
 	sRead = ""
 	sMatch = ""
 	sGen = ""
 	i=0
-	kRead = read[i:sizeK]#the sizeK first char ex:acgtgtttcca
+	#the sizeK first char ex:acgtgtttcca
+	kRead = read[i:sizeK]
+	#list of position
 	pos = suffixeArray.GET_ALLpos(kRead,s,sa)
 	size = ((len(read))-1)
 	while (i <= len(pos)-1):
@@ -24,18 +27,24 @@ def alignementSA(read, dmax, sizeK,s, sa):
 		sMatch = ""
 		sGen = ""
 		j=0
-		d=0 #counter of Gap
+		#counter of Gap
+		d=0
+		#Position on the genome
 		x=pos[i]
-		while(j < (size) and d < dmax):#skip the car '$' 
+		while(j < (size) and d < dmax):
 			sRead += read[j]
-			sGen += s[x]	
+			sGen += s[x]
+			
+			#MissMatch
 			if(read[j] != s[x]):				
-				sMatch += ':'#misMatch				
+				sMatch += ':'			
 				d += 1
+			#Match
 			else:
-				sMatch += '|'#Match
+				sMatch += '|'
 			j+=1
 			x+=1
+		#forward in pos
 		i+=1
 		print(sRead)
 		print(sMatch)
@@ -93,3 +102,4 @@ def alignementHT(read, dmax, sizeK,s, T):
 def printPos(listPos):
 	for i in range(0, len(listPos)):
 		print listPos[i]		
+

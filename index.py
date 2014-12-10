@@ -40,7 +40,7 @@ def Index():
 	elif(typeIndex == "HT" or typeIndex == "ht"):
 		print("Indexation par table de hash")
 		T=hashTable.chain_index(s,Ksize)
-		#print T
+		print T
 		all_reads(file_r, s,Ksize, dmax, T, "HT")
 		file_r.close()
 		file_s.close()
@@ -53,6 +53,7 @@ def Index():
 	file_r.close()
 	file_s.close()	
 
+#Treat all reads of file_r
 def all_reads(f, s, Ksize, dmax, T, Mode):
 	while 1:
 		lines = f.readline()
@@ -67,12 +68,5 @@ def all_reads(f, s, Ksize, dmax, T, Mode):
 			elif(Mode == "HT"):
 				align.alignementHT(lines ,dmax , Ksize, s, T)
 
-#For test: Generate a sequence of size n
-def generate_seq(n):
-	seq = ""
-	for i in range(0, n):
-		seq+=choice("acgt")
-	seq+='$'
-	return (seq)
 
 Index()

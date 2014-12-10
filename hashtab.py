@@ -1,6 +1,6 @@
 import tools_MMM
 
-
+#Indexation in hashmap chaining
 #s = sequence
 #k = size of Kmer
 #T[ [i, kmer], [i, kmer]... ]
@@ -31,8 +31,7 @@ def chain_index(s,k):
 						#print "after append", k[0]
 					found=1
 				if (found==0):
-					T[adr].append(objectkmer)
-						
+					T[adr].append(objectkmer)						
 	return T
 	
 #found an occcur of w in an hashtab 
@@ -74,12 +73,17 @@ def chain_index222222(s,k):
 	kmer=[]
 	Ksize=k
 	st=""
+	
+	#Init of an empty Table
 	for i in range(0,m-1):
-		T[i]=T.append(None)		#Init of an empty Table
+		T[i]=T.append(None)		
 	for i in range(0,(len(s)-k)):
 		st = s[i:(i+Ksize)]
 		pos=i
+
 		kmer=[pos,st]#
+
+		#use of hash function
 		adr = tools.basicHash(kmer[1],m)
 		if (T[adr] == None):
 			T[adr] = [kmer]
@@ -99,3 +103,15 @@ def chain_index222222(s,k):
 	
 
 
+
+
+#To found position of w in the hashmap T
+def chain_queryWHAT(T,w,sSize):
+	tools = tools_MMM
+	adr= tools.basicHash(w,sSize)
+	if(T[adr]!=None):
+		print(T[adr])
+		for j in range(0,len(T[adr])):
+			if (T[adr][j][1]==w):
+				return T[adr][j][0]
+	return -1
