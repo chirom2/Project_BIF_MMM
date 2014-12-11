@@ -22,9 +22,9 @@ def alignementSA(read, dmax, sizeK,s, sa, strand):
 	i=0
 	#the sizeK first char ex:acgtgtttcca
 	if strand == -1:
-		read= revrs.reverse(read)
-		read = read[1:]
-	kRead = read[i:sizeK]
+		read = revrs.reverse(read)
+		read = read[1:]+'$'
+	kRead = read[0:sizeK]
 	#list of position
 	pos = suffixeArray.GET_ALLpos(kRead,s,sa,dmax)
 	size = ((len(read))-1)
@@ -50,14 +50,16 @@ def alignementSA(read, dmax, sizeK,s, sa, strand):
 			j+=1
 			x+=1
 		#forward in pos
-		print " alignement>>",numAlign	
-		print " #pos",pos[i]
-		print " #strand=",strand
-		print " #d=",d	
-		print " ",sRead
-		print " ",sMatch
-		print " ",sGen
-		print("\n") 
+		if j == size and d <= dmax:
+			print " alignement>>",numAlign	
+			print " #pos",pos[i]
+			print " #strand=",strand
+			print " #d=",d	
+			print " ",sRead
+			print " ",sMatch
+			print " ",sGen
+			print("\n") 
+			
 		i+=1
 		numAlign += 1
 #
@@ -75,7 +77,7 @@ def alignementHT(read, dmax, sizeK,s, T, strand):
 	pos = []
 	if strand == -1:
 		read= revrs.reverse(read)
-		read = read[1:]
+		read = read[1:]+'$'
 	kRead = read[0:sizeK]#the sizeK first char ex:acgtgtttcca
 	pos = ht.chain_query(T,kRead,sSize,dmax)#return a list of list
 	size = ((len(read))-1)
@@ -100,15 +102,15 @@ def alignementHT(read, dmax, sizeK,s, T, strand):
 					sMatch += '|'#Match
 				j+=1
 				x+=1
-				
-			print " alignement>>",numAlign	
-			print " #pos",pos[0][i]
-			print " #strand=",strand
-			print " #d=",d	
-			print " ",sRead
-			print " ",sMatch
-			print " ",sGen
-			print("\n") 
+			if j == size and d <= dmax:
+				print " alignement>>",numAlign	
+				print " #pos",pos[0][i]
+				print " #strand=",strand
+				print " #d=",d	
+				print " ",sRead
+				print " ",sMatch
+				print " ",sGen
+				print("\n") 
 			i+=1	
 			numAlign += 1
 
