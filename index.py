@@ -10,6 +10,8 @@ hashTable = hashtab
 tools=tools_MMM
 align = alignement
 
+#strand
+strand =-1
 #Size of seeds
 Ksize=20
 #Numbers of Gap
@@ -34,13 +36,13 @@ def Index():
 	#Indexation Sufixe Array
 	if(typeIndex == "SA" or typeIndex == "sa"):
 		print("Indexation par la methode du SA")
-		all_reads(file_r, s, Ksize, dmax, 0, "SA")
+		all_reads(file_r, s, Ksize, dmax, 0, "SA",strand)
 		
 	#Indexation Hashtab
 	elif(typeIndex == "HT" or typeIndex == "ht"):
 		print("Indexation par table de hash")
 		T=hashTable.chain_index(s,Ksize)
-		all_reads(file_r, s,Ksize, dmax, T, "HT")
+		all_reads(file_r, s,Ksize, dmax, T, "HT",strand)
 		file_r.close()
 		file_s.close()
 		
@@ -53,7 +55,7 @@ def Index():
 	file_s.close()	
 
 #Treat all reads of file_r
-def all_reads(f, s, Ksize, dmax, T, Mode):
+def all_reads(f, s, Ksize, dmax, T, Mode, strand):
 	while 1:
 		lines = f.readline()
 		if not lines:
@@ -65,7 +67,7 @@ def all_reads(f, s, Ksize, dmax, T, Mode):
 			if(Mode == "SA"):
 				suffixearray.SAmethod(s,lines, Ksize, dmax)
 			elif(Mode == "HT"):
-				align.alignementHT(lines ,dmax , Ksize, s, T)
+				align.alignementHT(lines ,dmax , Ksize, s, T, strand)
 
 
 Index()

@@ -2,12 +2,12 @@
 #reverse all the string
 def reverse(r):
 	rev=""
-	for i in range(0,len(r)-1):
-		rev += reverseAux(r[i])
+	for i in range(0,len(r)):
+		rev = complement(r[i])+rev
 	return rev
 
 #reverse one car
-def reverseAux(i):
+def complement(i):
 	if i=='A':
 		i='T'
 	elif i=='T':

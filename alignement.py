@@ -10,7 +10,7 @@ revrs = reverse
 #param:
 #pos = list of pos / indexGen = genome is index / read = read / dmax = substitution numbers
 #
-def alignementSA(read, dmax, sizeK,s, sa):
+def alignementSA(read, dmax, sizeK,s, sa, strand):
 	suffixeArray = suffixe_array
 	#Empty list of position
 	pos = []
@@ -21,6 +21,9 @@ def alignementSA(read, dmax, sizeK,s, sa):
 	numAlign = 0
 	i=0
 	#the sizeK first char ex:acgtgtttcca
+	if strand == -1:
+		read= revrs.reverse(read)
+		read = read[1:]
 	kRead = read[i:sizeK]
 	#list of position
 	pos = suffixeArray.GET_ALLpos(kRead,s,sa,dmax)
@@ -60,7 +63,7 @@ def alignementSA(read, dmax, sizeK,s, sa):
 #
 #Alignement for the hashtab
 #
-def alignementHT(read, dmax, sizeK,s, T):
+def alignementHT(read, dmax, sizeK,s, T, strand):
 	ht = hashtab
 	kRead = ""
 	sRead = ""
@@ -70,10 +73,12 @@ def alignementHT(read, dmax, sizeK,s, T):
 	i=0
 	sSize=len(s)
 	pos = []
+	if strand == -1:
+		read= revrs.reverse(read)
+		read = read[1:]
 	kRead = read[0:sizeK]#the sizeK first char ex:acgtgtttcca
 	pos = ht.chain_query(T,kRead,sSize,dmax)#return a list of list
 	size = ((len(read))-1)
-
 	if (pos != None and pos != []):
 		sizePos = len(pos[0])
 		#print "sizePOs ", sizePos
@@ -98,7 +103,7 @@ def alignementHT(read, dmax, sizeK,s, T):
 				
 			print " alignement>>",numAlign	
 			print " #pos",pos[0][i]
-			print " #strand=+",-1#TODO check this parameter
+			print " #strand=+",strand#TODO check this parameter
 			print " #d=",d	
 			print " ",sRead
 			print " ",sMatch
