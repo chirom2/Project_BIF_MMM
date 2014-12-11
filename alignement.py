@@ -52,7 +52,7 @@ def alignementSA(read, dmax, sizeK,s, sa, strand):
 		#forward in pos
 		print " alignement>>",numAlign	
 		print " #pos",pos[i]
-		print " #strand=+",-1#TODO check this parameter
+		print " #strand=",strand
 		print " #d=",d	
 		print " ",sRead
 		print " ",sMatch
@@ -103,7 +103,7 @@ def alignementHT(read, dmax, sizeK,s, T, strand):
 				
 			print " alignement>>",numAlign	
 			print " #pos",pos[0][i]
-			print " #strand=+",strand#TODO check this parameter
+			print " #strand=",strand
 			print " #d=",d	
 			print " ",sRead
 			print " ",sMatch

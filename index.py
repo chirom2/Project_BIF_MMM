@@ -2,6 +2,7 @@ import suffixe_array
 import hashtab
 import alignement
 import tools_MMM
+import reverse
 from random import *
 import os
 
@@ -9,9 +10,11 @@ suffixearray=suffixe_array
 hashTable = hashtab
 tools=tools_MMM
 align = alignement
+revrs = reverse
+
 
 #strand
-strand =-1
+strand =1
 #Size of seeds
 Ksize=20
 #Numbers of Gap
@@ -65,9 +68,15 @@ def all_reads(f, s, Ksize, dmax, T, Mode, strand):
 			lines = f.readline()
 			lines = lines.replace("\n",'$')#lines = reads
 			if(Mode == "SA"):
-				suffixearray.SAmethod(s,lines, Ksize, dmax)
+				suffixearray.SAmethod(s,lines, Ksize, dmax, strand)
+				if(strand==0):
+					lines = revrs.reverse(lines)
+					suffixearray.SAmethod(s,lines[1:], Ksize, dmax, strand)
 			elif(Mode == "HT"):
 				align.alignementHT(lines ,dmax , Ksize, s, T, strand)
+				if(strand==0):
+					lines = revrs.reverse(lines)
+					align.alignementHT(lines ,dmax , Ksize, s, T, strand)
 
 
 Index()

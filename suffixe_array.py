@@ -62,9 +62,9 @@ def GET_ALLpos(q,s,sa,dmax):
 	return pos	
 	
 	
-def SAmethod(s, read, sizeK, dmax):
+def SAmethod(s, read, sizeK, dmax, strand):
 	sa = getSA(s)	
-	align.alignementSA(read, dmax, sizeK,s, sa)
+	align.alignementSA(read, dmax, sizeK,s, sa, strand)
 
 
 
