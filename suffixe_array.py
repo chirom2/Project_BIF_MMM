@@ -31,6 +31,7 @@ def GET_ALLpos(q,s,sa,dmax):
 		#print(occ)	
 		if(align.diffBetween2S(q,occ,dmax)):
 			pos.append(sa[i])
+			#print pos
 			endUp = i+1
 			endDown = i-1		
 			if(endUp < size_sa):#Look Up

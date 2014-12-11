@@ -1,7 +1,9 @@
 import suffixe_array
 import hashtab
 import tools_MMM
+import reverse
 
+revrs = reverse
 
 
 #Content all functions which could align a kmer with part of the genomez
@@ -32,10 +34,9 @@ def alignementSA(read, dmax, sizeK,s, sa):
 		d=0
 		#Position on the genome
 		x=pos[i]
-		while(j < (size) and d < dmax):
+		while(j < size and d < dmax):
 			sRead += read[j]
 			sGen += s[x]
-			
 			#MissMatch
 			if(read[j] != s[x]):				
 				sMatch += ':'			
@@ -110,11 +111,13 @@ def alignementHT(read, dmax, sizeK,s, T):
 def diffBetween2S(s1,s2,dmax):
 	count=0
 	j=0
-	for i in range(0,len(s2)-1):
+	i=0
+	while(j<len(s2)-1):
 		if(s1[i]!=s2[j]):
 			count+=1
 		j+=1
-	if(count<=dmax):
+		i+=1
+	if(count<=dmax and i==len(s1)-1):
 		return True
 	return False
 		

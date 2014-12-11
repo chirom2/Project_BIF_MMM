@@ -4,6 +4,8 @@ import reverse
 
 revrs = reverse
 align=alignement
+tools = tools_MMM
+
 
 #Indexation in hashmap chaining
 #s = sequence
@@ -24,7 +26,7 @@ def chain_index(s,k):
 		pos=[i]
 		objectkmer=[pos,st]#POS or I [ [list, of ,postion] , "kmer"] => element of the hashtable
 		adr = tools.basicHash(objectkmer[1],m)
-		if  T[adr] == None:
+		if (T[adr] == None):
 			T[adr] = [objectkmer]
 		else: #the kmer is not present
 			for j in range(0,len(T[adr])):				
@@ -44,14 +46,9 @@ def chain_index(s,k):
 #Return: position's list of w, None if w is not present in the hashtab
 #hash looks like T[ ]
 def chain_query(T,w,sSize,dmax):
-	tools = tools_MMM
 	adr= tools.basicHash(w,sSize)
 	listPos = []
-	if  T[adr] == None:
-		x=revrs.reverseAux(w[0])
-		w=x+w[1:]
-		adr= tools.basicHash(w,sSize)
-	elif T[adr] != None:		
+	if(T[adr] != None):		
 		for j in range(0,len(T[adr])):
 			if(T[adr][j][1]==w):
 				listPos.append(T[adr][j][0])
