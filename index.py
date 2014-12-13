@@ -74,13 +74,17 @@ def all_reads(f, s, Ksize, dmax, T, Mode, strand):
 			lines = f.readline()
 			lines = lines.replace("\n",'$')#lines = reads
 			if(Mode == "SA"):
-				suffixearray.SAmethod(s,lines, Ksize, dmax, 1)
 				if(strand==0):
+					suffixearray.SAmethod(s,lines, Ksize, dmax, 1)
 					suffixearray.SAmethod(s,lines, Ksize, dmax, -1)
+				else:
+					suffixearray.SAmethod(s,lines, Ksize, dmax, strand)
 			elif(Mode == "HT"):
-				align.alignementHT(lines ,dmax , Ksize, s, T, 1)
 				if(strand==0):
+					align.alignementHT(lines ,dmax , Ksize, s, T, 1)
 					align.alignementHT(lines ,dmax , Ksize, s, T, -1)
+				else:
+					align.alignementHT(lines ,dmax , Ksize, s, T, strand)
 
 
 
