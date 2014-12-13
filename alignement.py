@@ -1,3 +1,4 @@
+#Alignement functions
 import suffixe_array
 import hashtab
 import tools_MMM
@@ -126,7 +127,7 @@ def alignementHT(read, dmax, sizeK,s, T, strand):
 			numAlign += 1
 	return toPrint		
 
-#return a boolean if the difference between s1 & s2
+#return a boolean if the difference between s1 & s2 is in the interval [0,dmax]
 def diffBetween2S(s1,s2,dmax):
 	count=0
 	j=0

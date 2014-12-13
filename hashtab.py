@@ -1,3 +1,4 @@
+#Indexation functions (Hash Table)
 import tools_MMM
 import alignement
 import reverse

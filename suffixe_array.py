@@ -1,15 +1,16 @@
-#Indexation functions (SA 
-#SA
-
+#Indexation functions (Suffixe Array)
 import tools_MMM
 import alignement
 
 align = alignement
 toolsMMM=tools_MMM
 
-
-###########################################################################
-		
+#Look in the sa if q occur
+#s = sequence
+#sa = the suffixe array of s
+#k = size of Kmer
+#dmax = maximum of substitutions allowed
+#return the position's list of q in s
 def getAllPos(q,s,sa,dmax):
 	deb = 0
 	fin = len(s)
