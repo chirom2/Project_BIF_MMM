@@ -5,18 +5,12 @@ import tools_MMM
 import alignement
 
 align = alignement
+toolsMMM=tools_MMM
 
 
 ###########################################################################
-	
-#return the suffixe array for a sequence s
-def getSA(s):
-	toolsMMM=tools_MMM
-	sa=toolsMMM.simple_kark_sort(s)
-	return sa
-
-	
-def GET_ALLpos(q,s,sa,dmax):
+		
+def getAllPos(q,s,sa,dmax):
 	deb = 0
 	fin = len(s)
 	size_q= len(q)
@@ -26,10 +20,8 @@ def GET_ALLpos(q,s,sa,dmax):
 	while( (fin-deb) >= 0):
 		i = (deb+fin)/2
 		occ = s[sa[i]:sa[i]+size_q]
-		#print(occ)	
 		if(align.diffBetween2S(q,occ,dmax)):
 			pos.append(sa[i])
-			#print pos
 			endUp = i+1
 			endDown = i-1		
 			if(endUp < size_sa):#Look Up
@@ -57,11 +49,6 @@ def GET_ALLpos(q,s,sa,dmax):
 		else:
 			deb=i+1				
 	return pos	
-	
-	
-def SAmethod(s, read, sizeK, dmax, strand):
-	sa = getSA(s)	
-	align.alignementSA(read, dmax, sizeK,s, sa, strand)
 
 
 

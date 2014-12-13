@@ -21,7 +21,7 @@ def chain_index(s,k):
 	st=""
 	for i in range(0,m-1):
 		T[i]=T.append(None)		#Init of an empty Table
-	for i in range(0,(len(s)-k)):
+	for i in range(0,(m - Ksize)):
 		st = s[i:(i+Ksize)]
 		pos=[i]
 		objectkmer=[pos,st]#POS or I [ [list, of ,postion] , "kmer"] => element of the hashtable

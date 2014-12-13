@@ -3,20 +3,23 @@ import hashtab
 import tools_MMM
 import reverse
 import os
+
 revrs = reverse
+suffixeArray = suffixe_array
 
 
 #Content all functions which could align a kmer with part of the genomez
 #param:
 #pos = list of pos / indexGen = genome is index / read = read / dmax = substitution numbers
 def alignementSA(read, dmax, sizeK,s, sa, strand):
-	suffixeArray = suffixe_array
 	#Empty list of position
 	pos = []
 	kRead = ""
 	sRead = ""
 	sMatch = ""
 	sGen = ""
+	currentAling = ""
+	toPrint = ""
 	numAlign = 0
 	i=0
 	#the sizeK first char ex:acgtgtttcca
@@ -25,12 +28,14 @@ def alignementSA(read, dmax, sizeK,s, sa, strand):
 		read = read[1:]+'$'
 	kRead = read[0:sizeK]
 	#list of position
-	pos = suffixeArray.GET_ALLpos(kRead,s,sa,dmax)
+	pos = suffixeArray.getAllPos(read,s,sa,dmax)
+	print pos
 	size = ((len(read))-1)
 	while (i <= len(pos)-1):
 		sRead = ""
 		sMatch = ""
 		sGen = ""
+		currentAling = ""
 		j=0
 		#counter of Gap
 		d=0
@@ -50,17 +55,19 @@ def alignementSA(read, dmax, sizeK,s, sa, strand):
 			x+=1
 		#forward in pos
 		if j == size and d <= dmax:
-			print " alignement>>",numAlign	
-			print " #pos",pos[i]
-			print " #strand=",strand
-			print " #d=",d	
-			print " ",sRead
-			print " ",sMatch
-			print " ",sGen
-			print("\n") 
+			currentAling += " alignement>> "+str(numAlign)+"\n"	
+			currentAling += " #pos"+str(pos[i])+"\n"
+			currentAling += " #strand="+str(strand)+"\n"
+			currentAling += " #d="+str(d)+"\n"
+			currentAling += " "+str(sRead)+"\n"
+			currentAling += " "+str(sMatch)+"\n"
+			currentAling += " "+str(sGen)+"\n"
+			currentAling +=("\n")
+			toPrint += currentAling
 			
 		i+=1
 		numAlign += 1
+	return toPrint
 #
 #Alignement for the hashtab
 #
@@ -115,7 +122,6 @@ def alignementHT(read, dmax, sizeK,s, T, strand):
 				currentAling += " "+str(sGen)+"\n"
 				currentAling +=("\n")
 				toPrint += currentAling
-				
 			i+=1	
 			numAlign += 1
 	return toPrint		

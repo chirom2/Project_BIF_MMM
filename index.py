@@ -4,53 +4,54 @@ import alignement
 import tools_MMM
 import reverse
 import time
+import sys
 from random import *
 import os
 
-suffixearray=suffixe_array
+suffixeArray=suffixe_array
 hashTable = hashtab
 tools=tools_MMM
 align = alignement
 revrs = reverse
 
-
-#strand
-strand =0
+# Sequence name's file 
+file_nameS = sys.argv[1]
+# Reads name's file 
+file_nameR = sys.argv[2]
+# type of index
+typeIndex = sys.argv[3]
 #Size of seeds
-Ksize=20
+Ksize = int(sys.argv[4])
 #Numbers of Gap
-dmax=5
+dmax = int(sys.argv[5])
+#strand
+strand = int(sys.argv[6])
 
 def Index():
-	typeIndex=raw_input("entrez le choix d'indexation, SA ou HT \n")
+	#Start time counting
 	debut = time.time()
-	#file_name = "test1/reference2.fasta"
-	file_name = "test2/reference_puceron_2Mb.fasta"
 	
 	#Opening Genome's file
-	file_s = open(file_name, 'r')
+	file_s = open(file_nameS, 'r')
 	s = file_s.readline()	
-	while(s[0]=='>'):
+	if(s[0]=='>'):
 		s = file_s.readline()
 		s = s.replace("\n",'$')#change the last chararcter in $
 		
 	#Opening Read's file
-	#file_name = "test1/reads.fasta"
-	file_name = "test2/reads_1K.fasta"
-	file_r = open(file_name, 'r')
+	file_r = open(file_nameR, 'r')
 		
 	#Indexation Sufixe Array
 	if(typeIndex == "SA" or typeIndex == "sa"):
 		print("Indexation par la methode du SA")
-		all_reads(file_r, s, Ksize, dmax, 0, "SA",strand)
+		sa = tools.simple_kark_sort(s)
+		all_reads(file_r, s, Ksize, dmax, sa, "SA",strand)
 		
 	#Indexation Hashtab
 	elif(typeIndex == "HT" or typeIndex == "ht"):
 		print("Indexation par table de hash")
 		T=hashTable.chain_index(s,Ksize)
 		all_reads(file_r, s,Ksize, dmax, T, "HT",strand)
-		file_r.close()
-		file_s.close()
 		
 	#Wrong command
 	else:
@@ -59,46 +60,40 @@ def Index():
 	#Close files
 	file_r.close()
 	file_s.close()
+	
+	#End time counting
 	fin = time.time()
 	print (fin-debut)
 
 
-#Treat all reads of file_r
-def all_reads(f, s, Ksize, dmax, T, Mode, strand):
+#Dispatch all reads of file_r to alignement
+def all_reads(f, s, Ksize, dmax, array, Mode, strand):
 	fileRes = open("resAlignement.txt", "w")
 	toPrint = ""
-	
-	
 	while 1:
 		lines = f.readline()
 		if not lines:
 			break			
 		if(lines[0] == '>'):
-			print lines
 			toPrint += lines
 			lines = f.readline()
 			lines = lines.replace("\n",'$')#lines = reads
 			
 			if(Mode == "SA"):
 				if(strand==0):
-					suffixearray.SAmethod(s,lines, Ksize, dmax, 1)
-					suffixearray.SAmethod(s,lines, Ksize, dmax, -1)
+					toPrint += align.alignementSA(lines, dmax, Ksize, s, array, 1)
+					toPrint += align.alignementSA(lines, dmax, Ksize, s, array, -1)
 				else:
-					suffixearray.SAmethod(s,lines, Ksize, dmax, strand)
+					toPrint += align.alignementSA(lines, dmax, Ksize, s, array, strand)
 			elif(Mode == "HT"):
 				if(strand==0):
-<<<<<<< HEAD
-					toPrint += align.alignementHT(lines ,dmax , Ksize, s, T, 1)
-					fileRes.write(toPrint)
-		print toPrint	
-	fileRes.close()
-=======
-					align.alignementHT(lines ,dmax , Ksize, s, T, 1)
-					align.alignementHT(lines ,dmax , Ksize, s, T, -1)
+					toPrint += align.alignementHT(lines ,dmax , Ksize, s, array, 1)
+					toPrint += align.alignementHT(lines ,dmax , Ksize, s, array, -1)
 				else:
-					align.alignementHT(lines ,dmax , Ksize, s, T, strand)
+					toPrint += align.alignementHT(lines ,dmax , Ksize, s, array, strand)
+	fileRes.write(toPrint)
+	print toPrint	
+	fileRes.close()
 
-
->>>>>>> e20193e843181dd4485b1e4dbf6a9e119cb6beca
 
 Index()
