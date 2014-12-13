@@ -19,7 +19,7 @@ strand =0
 #Size of seeds
 Ksize=20
 #Numbers of Gap
-dmax=6
+dmax=5
 
 def Index():
 	typeIndex=raw_input("entrez le choix d'indexation, SA ou HT \n")
@@ -65,14 +65,20 @@ def Index():
 
 #Treat all reads of file_r
 def all_reads(f, s, Ksize, dmax, T, Mode, strand):
+	fileRes = open("resAlignement.txt", "w")
+	toPrint = ""
+	
+	
 	while 1:
 		lines = f.readline()
 		if not lines:
 			break			
 		if(lines[0] == '>'):
-			print(lines)
+			print lines
+			toPrint += lines
 			lines = f.readline()
 			lines = lines.replace("\n",'$')#lines = reads
+			
 			if(Mode == "SA"):
 				suffixearray.SAmethod(s,lines, Ksize, dmax, 1)
 				if(strand==0):
@@ -80,8 +86,9 @@ def all_reads(f, s, Ksize, dmax, T, Mode, strand):
 			elif(Mode == "HT"):
 				align.alignementHT(lines ,dmax , Ksize, s, T, 1)
 				if(strand==0):
-					align.alignementHT(lines ,dmax , Ksize, s, T, -1)
-
-
+					toPrint += align.alignementHT(lines ,dmax , Ksize, s, T, 1)
+					fileRes.write(toPrint)
+		print toPrint	
+	fileRes.close()
 
 Index()

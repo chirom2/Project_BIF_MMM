@@ -8,14 +8,12 @@ align = alignement
 
 
 ###########################################################################
-
 	
 #return the suffixe array for a sequence s
 def getSA(s):
 	toolsMMM=tools_MMM
 	sa=toolsMMM.simple_kark_sort(s)
 	return sa
-	
 
 	
 def GET_ALLpos(q,s,sa,dmax):
@@ -23,7 +21,7 @@ def GET_ALLpos(q,s,sa,dmax):
 	fin = len(s)
 	size_q= len(q)
 	size_s= len(s)
-	size_sa= len(sa)#CHeck that!!!
+	size_sa= len(sa)#
 	pos = []
 	while( (fin-deb) >= 0):
 		i = (deb+fin)/2
@@ -57,8 +55,7 @@ def GET_ALLpos(q,s,sa,dmax):
 		elif(occ>q):
 			fin=i-1
 		else:
-			deb=i+1
-				
+			deb=i+1				
 	return pos	
 	
 	

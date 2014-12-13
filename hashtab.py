@@ -48,9 +48,9 @@ def chain_index(s,k):
 def chain_query(T,w,sSize,dmax):
 	adr= tools.basicHash(w,sSize)
 	listPos = []
-	if(T[adr] != None):		
-		for j in range(0,len(T[adr])):
-			if(T[adr][j][1]==w):
+	if(T[adr] != None):				
+		for j in range(0,len(T[adr])):#We don't compare the first postition
+			if(T[adr][j][1]==w):#T[adr][j][1]==w
 				listPos.append(T[adr][j][0])
 			elif (align.diffBetween2S(T[adr][j][1],w,dmax)):
 				listPos.append(T[adr][j][0])
@@ -58,7 +58,7 @@ def chain_query(T,w,sSize,dmax):
 	return None			
 
 
-	
+
 def printPos(listPos):
 	for i in range(0, len(listPos)):
 		print listPos[i]
