@@ -80,15 +80,25 @@ def all_reads(f, s, Ksize, dmax, T, Mode, strand):
 			lines = lines.replace("\n",'$')#lines = reads
 			
 			if(Mode == "SA"):
-				suffixearray.SAmethod(s,lines, Ksize, dmax, 1)
 				if(strand==0):
+					suffixearray.SAmethod(s,lines, Ksize, dmax, 1)
 					suffixearray.SAmethod(s,lines, Ksize, dmax, -1)
+				else:
+					suffixearray.SAmethod(s,lines, Ksize, dmax, strand)
 			elif(Mode == "HT"):
-				align.alignementHT(lines ,dmax , Ksize, s, T, 1)
 				if(strand==0):
+<<<<<<< HEAD
 					toPrint += align.alignementHT(lines ,dmax , Ksize, s, T, 1)
 					fileRes.write(toPrint)
 		print toPrint	
 	fileRes.close()
+=======
+					align.alignementHT(lines ,dmax , Ksize, s, T, 1)
+					align.alignementHT(lines ,dmax , Ksize, s, T, -1)
+				else:
+					align.alignementHT(lines ,dmax , Ksize, s, T, strand)
+
+
+>>>>>>> e20193e843181dd4485b1e4dbf6a9e119cb6beca
 
 Index()
