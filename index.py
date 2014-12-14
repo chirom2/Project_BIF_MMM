@@ -8,14 +8,18 @@ import sys
 from random import *
 import os
 
+#############################
+
 suffixeArray=suffixe_array
 hashTable = hashtab
 tools=tools_MMM
 align = alignement
 revrs = reverse
 
+#############################
+
 # Sequence name's file 
-file_nameS = sys.argv[1]
+file_nameG = sys.argv[1]
 # Reads name's file 
 file_nameR = sys.argv[2]
 # type of index
@@ -32,10 +36,10 @@ def Index():
 	debut = time.time()
 	
 	#Opening Genome's file
-	file_s = open(file_nameS, 'r')
-	s = file_s.readline()	
+	file_G = open(file_nameG, 'r')
+	s = file_G.readline()	
 	if(s[0]=='>'):
-		s = file_s.readline()
+		s = file_G.readline()
 		s = s.replace("\n",'$')#change the last chararcter in $
 		
 	#Opening Read's file
@@ -59,7 +63,7 @@ def Index():
 			
 	#Close files
 	file_r.close()
-	file_s.close()
+	file_G.close()
 	
 	#End time counting
 	fin = time.time()
@@ -68,8 +72,10 @@ def Index():
 
 #Dispatch all reads of file_r to alignement
 def all_reads(f, s, Ksize, dmax, array, Mode, strand):
+	#Result of matching
 	fileRes = open("resAlignement.txt", "w")
 	toPrint = ""
+	#while there are read
 	while 1:
 		lines = f.readline()
 		if not lines:
@@ -78,21 +84,26 @@ def all_reads(f, s, Ksize, dmax, array, Mode, strand):
 			toPrint += lines
 			lines = f.readline()
 			lines = lines.replace("\n",'$')#lines = reads
-			
+			#Suffixe array methode
 			if(Mode == "SA"):
+				#Strand = 0; for both version ,original and reverse complement, of the read
 				if(strand==0):
 					toPrint += align.alignementSA(lines, dmax, Ksize, s, array, 1)
 					toPrint += align.alignementSA(lines, dmax, Ksize, s, array, -1)
 				else:
 					toPrint += align.alignementSA(lines, dmax, Ksize, s, array, strand)
+			#HashTable methode
 			elif(Mode == "HT"):
+				#Strand = 0, for original and reverse complement of the read
 				if(strand==0):
 					toPrint += align.alignementHT(lines ,dmax , Ksize, s, array, 1)
 					toPrint += align.alignementHT(lines ,dmax , Ksize, s, array, -1)
 				else:
 					toPrint += align.alignementHT(lines ,dmax , Ksize, s, array, strand)
+	#print results to file
 	fileRes.write(toPrint)
-	print toPrint	
+	print toPrint
+	#close file	
 	fileRes.close()
 
 

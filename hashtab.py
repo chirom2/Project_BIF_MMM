@@ -3,9 +3,13 @@ import tools_MMM
 import alignement
 import reverse
 
+#############################
+
 revrs = reverse
 align=alignement
 tools = tools_MMM
+
+#############################
 
 
 #Indexation in hashmap chaining
@@ -32,11 +36,9 @@ def chain_index(s,k):
 		else: #the kmer is not present
 			for j in range(0,len(T[adr])):				
 				k = T[adr][j]
-				#print "k0 ",k[0],"k[1] ",k[1]," kmer[0]",objectkmer[0]," objectkmer[1]", objectkmer[1]
 				if (objectkmer[1] == k[1]):#append
-					if k[0].count(objectkmer[0]) ==0:#the position is not present we add it
+					if k[0].count(objectkmer[0][0]) == 0:#the position is not present we add it
 						k[0].append(objectkmer[0][0])#add just a postion
-						#print "after append", k[0]
 					found=1
 				if (found==0):
 					T[adr].append(objectkmer)						
@@ -51,15 +53,8 @@ def chain_query(T,w,sSize,dmax):
 	listPos = []
 	if(T[adr] != None):				
 		for j in range(0,len(T[adr])):#We don't compare the first postition
-			if(T[adr][j][1]==w):#T[adr][j][1]==w
-				listPos.append(T[adr][j][0])
-			elif (align.diffBetween2S(T[adr][j][1],w,dmax)):
+			if (align.diffBetween2S(T[adr][j][1],w,dmax)):
 				listPos.append(T[adr][j][0])
 		return listPos
 	return None			
 
-
-
-def printPos(listPos):
-	for i in range(0, len(listPos)):
-		print listPos[i]
